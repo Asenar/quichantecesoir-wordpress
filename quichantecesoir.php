@@ -11,12 +11,12 @@ Version: 0.1
  */
 
 class Qccs {
-
-  public static $available_cells = 'image,cp_country,date,main,note,link,title,address';
-  public static $default_order = 'image,cp_country,date,main,note,link';
+  public static $script_url = 'http://quichantecesoir.com/js/widget.js';
+  public static $available_cells = 'bigdate,date,cp,city,cp_city_country,main,spectacle,spectacle_only,title,lieu,lieu_address,contact,address,note,link';
+  public static $default_order = 'bigdate,cp_country,main,note,link';
 
   private static $inst = null;
-  public function instance() {
+  static public function instance() {
     if (is_null(Qccs::$inst)) {
       self::$inst = new Qccs;
     }
@@ -53,7 +53,7 @@ class Qccs {
 <script type="text/javascript">
 				jQuery(document).ready(function() {
 				  jQuery('#add_qccs_template_tag').on('click', function() {
-				  	window.send_to_editor('[quichantecesoir table=1 images=0 custom_order="image,cp_country,date,main,note,link"]');
+				  	window.send_to_editor('[quichantecesoir table=1 custom_order="bigdate,cp_country,main,note,link"]');
 					tb_remove();
 				  })
 				});
@@ -70,7 +70,7 @@ SCRIPT;
   }
 
   public function wp_head() {
-    //echo "\n<script type='text/javascript' src='http://www.quichantecesoir.com/js/widget.js'></script>\n";
+    //echo "\n<script type='text/javascript' src='".Qccs::$script_url."'></script>\n";
     if ( !empty($this->options['custom_css']) ) {
       echo '<style type="text/css">' . $this->options['custom_css'] . '</style>';
     }
@@ -122,13 +122,6 @@ SCRIPT;
     $title = esc_attr( $options['title'] );
     echo "<input id='qccs_options_title' name='qccs_options[title]' type='text' value='$title' /></p>";
 
-    echo "<p><label for='qccs_options[images]'><strong>Images</strong></label></p>";
-    $images = esc_attr( $options['images'] );
-    echo '<label>';
-    echo "<input id='qccs_options_images' name='qccs_options[images]' type='checkbox' value='1' ".($images?'checked="checked"':'')." />";
-    echo "Cochez cette case pour afficher les images quand disponible</p>";
-    echo '</label>';
-
     echo "<p><label for='qccs_options[table]'><strong>Table</strong></label></p>";
     echo '<label>';
     $table = esc_attr( $options['table'] );
@@ -150,7 +143,6 @@ SCRIPT;
       <br>
       <textarea name='qccs_options[custom_css]' style='width:100%;height:300px;' tabindex='1'>$css</textarea>
       </p>";
-    //echo '<script type="text/javascript" src="http://www.quichantecesoir.com/js/widget.js"></script>';
 		echo "<h3>Aide CSS</h3>";
 		echo <<<EXAMPLE_CSS
 <dl>
@@ -205,35 +197,35 @@ EXAMPLE_CSS;
     if ( empty($params['url']) ) {
       $params['url'] = $this->options['url'];
     }
-    if ( empty($params['custom_order']) ) {
-      $params['custom_order'] = $this->options['custom_order'];
-    }
     if ( empty($params['title']) ) {
       $params['title'] = $this->options['title'];
     }
     if ( empty($params['artist_name']) ) {
       $params['artist_name'] = $this->options['artist_name'];
     }
-    if (empty($params['images'])) {
-      $params['images'] = (int)$this->options['images'];
+
+    if ( empty($params['custom_order']) ) {
+      $params['custom_order'] = $this->options['custom_order'];
     }
     if (empty($params['table'])) {
       $params['table'] = $this->options['table'];
     }
-    $classes = 'qccs-widget';
-    if ($params['images']) {
-      $classes .= ' qccs-images';
-    }
+
+    $qccs_options = [];
     if ($params['table']) {
-      $classes .= ' qccs-table';
+      $qccs_options[] = 'data-qccs-table="1"';
+    } else {
+      $qccs_options[] = 'data-qccs-table="0"';
     }
-    $data_order = '';
+
     if ($params['custom_order']) {
-      $data_order = 'data-order="'.$params['custom_order'].'"';
+      $qccs_options[] = 'data-qccs-order="'.$params['custom_order'].'"';
     }
-    $output = '<a href="'.$params['url'].'" class="'.$classes.'" '.$data_order.' >'
+
+    $classes = 'qccs-widget';
+    $output = '<a href="'.$params['url'].'" class="'.$classes.'" '.implode(' ', $qccs_options).'>'
       .($params['artist_name']?$params['artist_name']:'Les prochaines dates sur qui chante ce soir').'</a>';
-    $output .= "<script type='text/javascript' src='http://www.quichantecesoir.com/js/widget.js'></script>";
+    $output .= "<script type='text/javascript' src='".Qccs::$script_url."'></script>";
     $options = get_option('qccs_options');
     if ( $echo ) {
       echo $output;
@@ -263,7 +255,6 @@ class Qccs_Widget extends WP_Widget {
     $params = [
       'url' => $instance['url'],
       'display_limit' => $instance['display_limit'],
-      'images'        => $instance['images'],
       'table'         => $instance['table'],
       'custom_order'  => $instance['custom_order'],
       'artist_name'   => $instance['artist_name'],
@@ -277,7 +268,6 @@ class Qccs_Widget extends WP_Widget {
     $instance['title'] = strip_tags($new_instance['title']);
     $instance['url'] = strip_tags(stripslashes($new_instance['url']));
     $instance['display_limit'] = strip_tags(stripslashes($new_instance['display_limit']));
-    $instance['images'] = (bool)$new_instance['images'];
     $instance['table'] = (bool)$new_instance['table'];
     return $instance;
   }

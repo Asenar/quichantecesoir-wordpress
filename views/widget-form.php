@@ -40,23 +40,6 @@
 	<label for="title">
 		<input
 			type="hidden" value="0"
-			name="<?php echo $this->get_field_name('images'); ?>"
-		/>
-		<input
-			type="checkbox" tabindex="1"
-			name="<?php echo $this->get_field_name('images'); ?>"
-			id="<?php echo $this->get_field_id('images'); ?>"
-			value="1"
-<?php echo $instance['images']?'checked="checked"':''; ?>
-		/>
-		cocher pour afficher les images
-	</label>
-</p>
-
-<p>
-	<label for="title">
-		<input
-			type="hidden" value="0"
 			name="<?php echo $this->get_field_name('table'); ?>"
 		/>
 		<input
@@ -85,7 +68,9 @@
 défaut: <code><?php echo Qccs::$default_order; ?></code>
 </div>
 <div class="help-block">
-cases dispo: <code><?php echo Qccs::$available_cells; ?></code>
+cases dispo: <code><?php
+// TODO: onclick = fill custom_order field :)
+echo Qccs::$available_cells; ?></code>
 </div>
 </p>
 
