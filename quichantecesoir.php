@@ -201,7 +201,7 @@ EXAMPLE_CSS;
       $params['title'] = $this->options['title'];
     }
     if ( empty($params['artist_name']) ) {
-      $params['artist_name'] = $this->options['artist_name'];
+      $params['artist_name'] = isset($this->options['artist_name'])?$this->options['artist_name']:'';
     }
 
     if ( empty($params['custom_order']) ) {
