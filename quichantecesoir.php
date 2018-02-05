@@ -11,7 +11,7 @@ Version: 0.1
  */
 
 class Qccs {
-  public static $script_url = 'http://quichantecesoir.com/js/widget.js';
+  public static $script_url = '//quichantecesoir.com/js/widget.js';
   public static $available_cells = 'bigdate,date,cp,city,cp_city_country,main,spectacle,spectacle_only,title,lieu,lieu_address,contact,address,note,link';
   public static $default_order = 'bigdate,cp_country,main,note,link';
 
