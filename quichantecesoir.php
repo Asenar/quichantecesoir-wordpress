@@ -41,7 +41,7 @@ class Qccs {
     $this->options = get_option('qccs_options');
   }
 
-  public function qccs_add_button($context) {
+  static public function qccs_add_button($context) {
 
   $title = 'Ajouter le tag quichantecesoir';
 
