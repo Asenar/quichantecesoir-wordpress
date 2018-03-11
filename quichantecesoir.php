@@ -11,7 +11,7 @@ Version: 0.1
  */
 
 class Qccs {
-  public static $script_url = 'http://quichantecesoir.com/js/widget.js';
+  public static $script_url = '//quichantecesoir.com/js/widget.js';
   public static $available_cells = 'bigdate,date,cp,city,cp_city_country,main,spectacle,spectacle_only,title,lieu,lieu_address,contact,address,note,link';
   public static $default_order = 'bigdate,cp_country,main,note,link';
 
@@ -41,7 +41,7 @@ class Qccs {
     $this->options = get_option('qccs_options');
   }
 
-  public function qccs_add_button($context) {
+  static public function qccs_add_button($context) {
 
   $title = 'Ajouter le tag quichantecesoir';
 
@@ -201,7 +201,7 @@ EXAMPLE_CSS;
       $params['title'] = $this->options['title'];
     }
     if ( empty($params['artist_name']) ) {
-      $params['artist_name'] = $this->options['artist_name'];
+      $params['artist_name'] = isset($this->options['artist_name'])?$this->options['artist_name']:'';
     }
 
     if ( empty($params['custom_order']) ) {
