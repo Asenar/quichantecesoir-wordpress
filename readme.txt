@@ -5,7 +5,7 @@ Requires at least: 2.7
 Tested up to: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Version: 0.1
+Version: 0.5
 
 QuiChanteCeSoir permet d'afficher les dates issues du site d'annonce de
 concert quichantecesoir.com

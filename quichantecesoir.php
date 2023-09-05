@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Qui Chante Ce Soir plugin
-Plugin URI: http://github.com/Asenar/quichantecesoir
+Plugin URI: http://github.com/Asenar/quichantecesoir-wordpress
 Plugin Description: Le plugin Quichantecesoir permet aux artistes d'afficher les dates saisies sur quichantecesoir.com directement sur leur site, soit sur un code sur une page dédiée, soit avec un widget dans l'un des emplacement prévu par Wordpress.
 Description: Le plugin Quichantecesoir permet aux artistes d'afficher les dates saisies sur quichantecesoir.com directement sur leur site, soit sur un code sur une page dédiée, soit avec un widget dans l'un des emplacement prévu par Wordpress.
 Author: Michaël Marinetti
 Plugin Author: Michaël Marinetti
-Author URI: http://www.quichantecesoir.com
-Version: 0.4
+Author URI: https://www.quichantecesoir.com
+Version: 0.5
  */
 
 class Qccs {
