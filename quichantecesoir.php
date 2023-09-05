@@ -7,13 +7,15 @@ Description: Le plugin Quichantecesoir permet aux artistes d'afficher les dates 
 Author: Michaël Marinetti
 Plugin Author: Michaël Marinetti
 Author URI: http://www.quichantecesoir.com
-Version: 0.1
+Version: 0.4
  */
 
 class Qccs {
   public static $script_url = '//quichantecesoir.com/js/widget.js';
   public static $available_cells = 'bigdate,date,cp,city,cp_city_country,main,spectacle,spectacle_only,title,lieu,lieu_address,contact,address,note,link';
   public static $default_order = 'bigdate,cp_country,main,note,link';
+
+  public $options = null;
 
   private static $inst = null;
   static public function instance() {
@@ -36,7 +38,9 @@ class Qccs {
     add_shortcode('quichantecesoir', array($this, 'shortcode'));
 
     // Widget
-    add_action('widgets_init', create_function('', 'return register_widget("Qccs_Widget");'));
+    add_action('widgets_init', function () {
+        return register_widget('Qccs_Widget');
+    });
 
     $this->options = get_option('qccs_options');
   }
@@ -208,7 +212,7 @@ EXAMPLE_CSS;
       $params['custom_order'] = $this->options['custom_order'];
     }
     if (empty($params['table'])) {
-      $params['table'] = $this->options['table'];
+      $params['table'] = $this->options['table'] ?? '10';
     }
 
     $qccs_options = [];
